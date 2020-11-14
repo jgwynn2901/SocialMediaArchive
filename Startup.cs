@@ -1,15 +1,16 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using GraphQL;
+using GraphQL.Server;
+using GraphQL.Server.Ui.Playground;
+using GraphQL.Types;
+using GraphQL.SystemTextJson;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using SocialMediaArchive.GraphQL;
+using SocialMediaArchive.Repositories;
 
 namespace SocialMediaArchive
 {
@@ -26,6 +27,15 @@ namespace SocialMediaArchive
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddSingleton(Configuration);
+            services.AddSingleton<IDocumentExecuter, DocumentExecuter>();
+            services.AddSingleton<IDocumentWriter, DocumentWriter>();
+            services.AddSingleton<PostRepository>();
+            services.AddSingleton<FacebookQuery>();
+            services.AddSingleton<ISchema, FacebookSchema>();
+            services.AddGraphQL()
+              .AddGraphTypes(ServiceLifetime.Singleton)
+              .AddSystemTextJson(deserializerSettings => { }, serializerSettings => { });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -36,16 +46,19 @@ namespace SocialMediaArchive
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
-
+            //app.UseHttpsRedirection();
             app.UseRouting();
-
             app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
+
+            app.UseGraphQL<ISchema>();
+            if (env.IsDevelopment())
+            {
+              app.UseGraphQLPlayground(new GraphQLPlaygroundOptions());
+            }
         }
     }
 }

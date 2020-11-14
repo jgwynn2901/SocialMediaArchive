@@ -1,5 +1,5 @@
 ## SocialMediaArchive
-==================
+
 Manage your social media posts
 
 #### Technology
