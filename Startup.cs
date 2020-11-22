@@ -1,4 +1,3 @@
-using System;
 using GraphQL;
 using GraphQL.Server;
 using GraphQL.Server.Ui.Playground;
@@ -21,6 +20,8 @@ namespace SocialMediaArchive
             Configuration = configuration;
         }
 
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -34,9 +35,20 @@ namespace SocialMediaArchive
             services.AddSingleton<FacebookQuery>();
             services.AddSingleton<ISchema, FacebookSchema>();
             services.AddGraphQL()
-              .AddGraphTypes(ServiceLifetime.Singleton)
+              .AddGraphTypes()
               .AddSystemTextJson(deserializerSettings => { }, serializerSettings => { });
+            
+            services.AddCors(options =>
+            {
+              options.AddPolicy(name: MyAllowSpecificOrigins,
+                builder =>
+                {
+                  builder.WithOrigins("http://valhalla:5000",
+                    "http://valhalla");
+                });
+            });
         }
+
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -53,7 +65,7 @@ namespace SocialMediaArchive
             {
                 endpoints.MapControllers();
             });
-
+            app.UseCors(MyAllowSpecificOrigins);
             app.UseGraphQL<ISchema>();
             if (env.IsDevelopment())
             {

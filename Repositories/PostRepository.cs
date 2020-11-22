@@ -11,6 +11,8 @@ namespace SocialMediaArchive.Repositories
   {
     private const string Query =
       "select id, user_id as UserId, title, timestamp, post as Text, uri from \"Facebook\".posts";
+    private const string UserQuery =
+      "select id, name, email from \"Facebook\".users";
     public PostRepository(IConfiguration configuration) : base(configuration)
     {
     }
@@ -45,6 +47,14 @@ namespace SocialMediaArchive.Repositories
       using var dbConnection = Connection;
       dbConnection.Open();
       return dbConnection.Query<Post>(sql);
+    }
+    public User FindUserById(int id)
+    {
+      var sql = $"{UserQuery}  where id= {id}";
+      using var dbConnection = Connection;
+      dbConnection.Open();
+      var result = dbConnection.Query<User>(sql).FirstOrDefault();
+      return result;
     }
   }
 }

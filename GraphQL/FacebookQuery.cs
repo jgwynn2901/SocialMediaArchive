@@ -26,6 +26,17 @@ namespace SocialMediaArchive.GraphQL
           return repository.FindById(id);
         }
       );
+
+      Field<UserType>(
+        name: "user",
+        arguments: new QueryArguments(new 
+          QueryArgument<IntGraphType> { Name = "id" }),
+        resolve: context =>
+        {
+          id = context.GetArgument<int>("id");
+          return repository.FindUserById(id);
+        }
+      );
       
     }
   }
