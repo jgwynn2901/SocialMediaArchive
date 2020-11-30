@@ -1,42 +1,33 @@
 import React from "react";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import Header from "./Header"
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Navbar = () => {
-    return (
-        <>
-            <nav className="relative flex flex-wrap fixed w-full items-center justify-between px-2 py-3 navbar-expand-lg bg-pink-500 mb-3">
-                <div className="container px-4 mx-auto flex flex-wrap items-center justify-between">
-                    <div className="w-full relative flex justify-between lg:w-auto  px-4 lg:static lg:block lg:justify-start">
-                        <a className="text-lg font-bold leading-relaxed inline-block mr-4 py-2 whitespace-no-wrap text-white" href="#home">
-                            <FontAwesomeIcon icon={['fab', 'facebook']} /> Facebook Reader
-                </a>
-                        <button className="cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none" type="button">
-                            <span className="block relative w-6 h-px rounded-sm bg-white"></span>
-                            <span className="block relative w-6 h-px rounded-sm bg-white mt-1"></span>
-                            <span className="block relative w-6 h-px rounded-sm bg-white mt-1"></span>
-                        </button>
-                    </div>
-                    <div className="lg:flex flex-grow items-center" id="example-navbar-warning">
-                        <ul className="flex flex-col lg:flex-row list-none ml-auto">
-                            <li className="nav-item">
-                                <a className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75" href="#pablo">
-                                    log in
-                        </a>
-                            </li>
-                            <li className="nav-item">
-                                <a className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75" href="#pablo">
-                                    register
-                        </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-            <Header></Header>
-        </>
-    );
+return (
+    <header className="lg:px-16 px-6 bg-white flex flex-wrap items-center lg:py-0 py-2">
+      <div className="flex-1 flex justify-between items-center">
+        <a
+          className="text-lg font-bold leading-relaxed inline-block mr-4 py-2 whitespace-no-wrap text-blue-700"
+          href="#home" >
+          <FontAwesomeIcon icon={["fab", "facebook"]} /> Facebook Reader
+        </a>
+      </div>
+      <label for="menu-toggle" class="pointer-cursor lg:hidden block">
+	    <svg className="fill-current text-gray-900" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><title>menu</title>
+            <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path>
+        </svg>
+      </label>
+      <input className="hidden" type="checkbox" id="menu-toggle" />
+      <div className="hidden lg:flex lg:items-center lg:w-auto w-full" id="menu" >
+        <nav>
+            <ul className="lg:flex items-center justify-between text-base text-gray-700 pt-4 lg:pt-0">
+                <li><a className="lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:bg-gray-400 text-blue-700" href="#home">Log In</a></li>
+                <li><a className="lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:bg-gray-400 text-blue-700" href="#home">Register</a></li>
+            </ul>
+        </nav>
+    
+      </div>
+    </header>
+)
 }
 
 export default Navbar;

@@ -1,7 +1,8 @@
-import React, {  useEffect, useContext } from 'react';
-import PostItem from './postItem';
-import Spinner from '../layout/Spinner';
-import PostContext from '../context/posts/postContext';
+import React, { useEffect, useContext } from "react";
+import PostItem from "./postItem";
+import Spinner from "../layout/Spinner";
+import PostContext from "../context/posts/postContext";
+import Card from "./Card";
 
 const Posts = () => {
   const postContext = useContext(PostContext);
@@ -18,16 +19,14 @@ const Posts = () => {
   }
 
   return (
-    <div className="content-center">
-      {posts !== null && !loading ? (      
-        posts.map(post => (
-          <PostItem key={post.id} post={post} />
-        ))
+    <div className="flex-1 overflow-y-auto p-5">
+      {posts !== null && !loading ? (
+        posts.map((post) => <PostItem key={post.id} post={post} />)
       ) : (
         <Spinner />
       )}
     </div>
   );
-}
+};
 
 export default Posts;
