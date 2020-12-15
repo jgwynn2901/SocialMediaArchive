@@ -37,6 +37,17 @@ namespace SocialMediaArchive.GraphQL
           return repository.FindUserById(id);
         }
       );
+
+      Field<ListGraphType<MediaType>>(
+        name: "media",
+        arguments: new QueryArguments(new 
+          QueryArgument<IntGraphType> { Name = "post_id" }),
+        resolve: context =>
+        {
+          id = context.GetArgument<int>("post_id");
+          return repository.GetMediaByPostId(id);
+        }
+      );
       
     }
   }

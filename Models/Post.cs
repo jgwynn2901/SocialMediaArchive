@@ -1,4 +1,6 @@
-﻿namespace SocialMediaArchive.Models
+﻿using System.Collections.Generic;
+
+namespace SocialMediaArchive.Models
 {
   public class Post : BaseModel
   {
@@ -8,5 +10,6 @@
     public int Timestamp { get; set; }
     public string Text { get; set; }
     public string Uri { get; set; }
+    public IEnumerable<Media> Media { get; set; }
   }
 }

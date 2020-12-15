@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using SocialMediaArchive.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace SocialMediaArchive.Repositories
@@ -13,6 +14,10 @@ namespace SocialMediaArchive.Repositories
       "select id, user_id as UserId, title, timestamp, post as Text, uri from \"Facebook\".posts";
     private const string UserQuery =
       "select id, name, email from \"Facebook\".users";
+    private const string MediaQuery =
+      "select id, post_id as PostId, Uri, Thumbnail from \"Facebook\".media";
+
+
     public PostRepository(IConfiguration configuration) : base(configuration)
     {
     }
@@ -38,6 +43,8 @@ namespace SocialMediaArchive.Repositories
       using var dbConnection = Connection;
       dbConnection.Open();
       var result = dbConnection.Query<Post>(sql).FirstOrDefault();
+      Debug.Assert(result != null, nameof(result) + " != null");
+      result.Media = GetMediaByPostId(result.Id);
       return result;
     }
 
@@ -55,6 +62,14 @@ namespace SocialMediaArchive.Repositories
       dbConnection.Open();
       var result = dbConnection.Query<User>(sql).FirstOrDefault();
       return result;
+    }
+
+    public List<Media> GetMediaByPostId(long id)
+    {
+      var sql = $"{MediaQuery} where post_id= {id}";
+      using var dbConnection = Connection;
+      dbConnection.Open();
+       return dbConnection.Query<Media>(sql).ToList();
     }
   }
 }
