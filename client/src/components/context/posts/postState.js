@@ -26,14 +26,12 @@ const PostState = props => {
     }
   }
 `
-
   const [state, dispatch] = useReducer(postReducer, initialState);
 
   // Get posts
   const getPosts = async (id) => {
     try {
-      const data = await request('http://valhalla:5000/graphql', query);
-      console.log(data.posts);
+      const data = await request('http://localhost:5000/graphql', query);
       dispatch({
         type: GET_POSTS,
         payload: data.posts

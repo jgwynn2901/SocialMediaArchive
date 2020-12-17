@@ -43,8 +43,10 @@ namespace SocialMediaArchive
               options.AddPolicy(name: MyAllowSpecificOrigins,
                 builder =>
                 {
-                  builder.WithOrigins("valhalla",
-                    "valhalla:5000");
+                  builder.WithOrigins("http://yggdrasil:3000",
+                    "http://localhost:3000")
+                      .AllowAnyHeader()
+                      .AllowAnyMethod();
                 });
             });
         }

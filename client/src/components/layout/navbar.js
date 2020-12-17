@@ -11,7 +11,7 @@ return (
           <FontAwesomeIcon icon={["fab", "facebook"]} /> Facebook Reader
         </a>
       </div>
-      <label for="menu-toggle" class="pointer-cursor lg:hidden block">
+      <label htmlFor="menu-toggle" className="cursor-pointer lg:hidden block">
 	    <svg className="fill-current text-gray-900" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><title>menu</title>
             <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path>
         </svg>
@@ -24,7 +24,6 @@ return (
                 <li><a className="lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:bg-gray-400 text-blue-700" href="#home">Register</a></li>
             </ul>
         </nav>
-    
       </div>
     </header>
 )
