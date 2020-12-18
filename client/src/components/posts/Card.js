@@ -5,7 +5,7 @@ import ImageItem from './imageItem';
 const Card = ({ post }) => {
     const { title, text, uri } = post;
     return (
-        <div className="max-w-3xl flex mx-auto my-8 rounded-lg bg-white">
+        <div className="max-w-3xl flex mx-auto my-8 rounded-lg bg-white hover:bg-gray-300 cursor-pointer">
             <div className="w-2/5 object-cover rounded">
                 <ImageItem uri={uri} />
             </div>
