@@ -3,6 +3,7 @@ import { request, gql } from 'graphql-request'
 import postContext from './postContext';
 import postReducer from './postReducer';
 import {
+  GET_POST,
   GET_POSTS,
   POST_ERROR,
   CLEAR_POSTS
@@ -11,6 +12,7 @@ import {
 const PostState = props => {
   const initialState = {
     posts: null,
+    post: null,
     user: { id: 1},
     loading: false
   };
@@ -44,6 +46,33 @@ const PostState = props => {
     }
   };
 
+  const getPost = async (id) => {
+    try {
+      console.log('getPost: ' + id);
+      const data = await request('http://localhost:5000/graphql', gql`
+      {
+        post(id:${id}) {
+          id,
+          timestamp,
+          text,
+          media {
+            uri
+          }
+        }
+      }
+      `);
+      dispatch({
+        type: GET_POST,
+        payload: data.post
+      });
+    } catch (err) {
+      dispatch({
+        type: POST_ERROR,
+        payload: err
+      });
+    }
+  };
+
   // Clear Posts
   const clearPosts = () => {
     dispatch({ type: CLEAR_POSTS });
@@ -52,9 +81,11 @@ const PostState = props => {
   return (
     <postContext.Provider
       value={{
+        post: state.post,
         posts: state.posts,
         user: state.user,
         error: state.error,
+        getPost,
         getPosts,
         clearPosts
       }}

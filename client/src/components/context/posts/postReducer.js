@@ -1,4 +1,5 @@
 import {
+  GET_POST,
   GET_POSTS,
   SET_LOADING,
   CLEAR_POSTS,
@@ -7,6 +8,12 @@ import {
 
 const postReducer = (state, action) => {
   switch (action.type) {
+    case GET_POST:
+      return {
+        ...state,
+        post: action.payload,
+        loading: false
+      };
     case GET_POSTS:
       return {
         ...state,
