@@ -54,7 +54,9 @@ const PostState = props => {
         post(id:${id}) {
           id,
           timestamp,
+          title,
           text,
+          uri,
           media {
             uri
           }
