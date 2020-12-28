@@ -33,6 +33,7 @@ const PostState = props => {
   // Get posts
   const getPosts = async (id) => {
     try {
+      state.loading = true;
       const data = await request('http://localhost:5000/graphql', query);
       dispatch({
         type: GET_POSTS,
@@ -48,7 +49,7 @@ const PostState = props => {
 
   const getPost = async (id) => {
     try {
-      console.log('getPost: ' + id);
+      state.loading = true;
       const data = await request('http://localhost:5000/graphql', gql`
       {
         post(id:${id}) {
